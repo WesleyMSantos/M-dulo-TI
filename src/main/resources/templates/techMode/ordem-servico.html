@@ -159,11 +159,11 @@
                                 </ul>
                             </li>
                             <li>
-                                 <a data-toggle="modal" data-target="#MailModal" href="#">
+                                <a data-toggle="modal" data-target="#MailModal" href="#">
                                     <i class="fas fa-desktop"></i>Equipamentos</a>
                             </li>
                             <li>
-                                 <a data-toggle="modal" data-target="#MailModal" href="#">
+                                <a data-toggle="modal" data-target="#MailModal" href="#">
                                     <i class="fas fa-desktop"></i>Pessoal</a>
                             </li>
                         </ul>
@@ -282,153 +282,126 @@
                     <div class="section__content section__content--p30">
                         <div class="container-fluid">
                             <div class="row">
-
-
-
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <strong data-th-if="${tecnico.id == null}" >Cadastrar Técnico</strong>
-                                            <strong data-th-if="${tecnico.id != null}" >Alterar Técnico</strong>
-                                        </div>
-
-                                        <div class="card-body card-block">
-                                            <form data-th-action="@{/TechMode/Painel/salvar}" method="POST" data-th-object="${tecnico}" enctype="multipart/form-data" class="form-horizontal">
-                                                <input type="hidden" data-th-if="*{id != null}" data-th-field="*{id}" />
-                                                <div class="row form-group">
-                                                    <div class="col col-md-2">
-                                                        <label for="text-input" class=" form-control-label">Nome*</label>
+                                <div class="col-md-12">
+                                    <!-- DATA TABLE -->
+                                    <h3 class="title-5 m-b-35">Chamados</h3>
+                                    <div data-th-if="${mensagemSucesso != null}" data-th-text="${mensagemSucesso}" class="alert alert-success" role="alert"></div>
+                                    <div class="table-data__tool">
+                                        <form data-th-action="@{/TechMode/Painel/Chamados/Filtrar}" method="GET" data-th-object="${filterRel}">
+                                            <div class="table-data__tool-left">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        De:
+                                                        <section class="card">
+                                                            <div class="card-body text-secondary">
+                                                                <input type="date" name="date-de" id="date-de" data-th-classappend="${#fields.hasErrors('dtInicio')}? is-invalid" data-th-field="*{dtInicio}">
+                                                            </div>
+                                                        </section>
                                                     </div>
-                                                    <div class="col-12 col-md-9">
-                                                        <input type="text" id="text-input" name="text-input" placeholder="Digite o nome completo" class="form-control" data-th-classappend="${#fields.hasErrors('nome')}? is-invalid" data-th-field="*{nome}">                                                        
-                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('nome')}" data-th-errors="*{nome}">
+                                                    <div class="col">
+                                                        Até:
+                                                        <section class="card">
+                                                            <div class="card-body text-secondary">
+                                                                <input type="date" name="date-ate" id="date-ate" data-th-classappend="${#fields.hasErrors('dtFinal')}? is-invalid" data-th-field="*{dtFinal}">
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                    <div class="col">
+                                                        <section class="card" style="margin-top: 25px; height: 67.9px">
+                                                            <div class="card-body text-secondary">
+                                                                <button type="submit">
+                                                                    <i class="zmdi zmdi-filter-list"></i> Filtrar</button>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="table-responsive table-responsive-data2">
+                                        <table class="table table-data2">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Titulo</th>
+                                                    <th>Chamado ID</th>
+                                                    <th>Chamado Título</th>
+                                                    <th>Dt.Abertura</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-th-fragment="tableBody(tableData)">
+                                                <tr class="tr-shadow" data-th-each="os : ${tableData}">
+                                                    <td data-th-text="${os.id}"></td>
+                                                    <td class="desc" data-th-text="${os.titulo}"></td>
+                                                    <td>
+                                                        <span class="block-email" data-th-text="${os.chamado.id}"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="block-email" data-th-text="${os.chamado.titulo}"></span>
+                                                    </td>
+                                                    <td data-th-text="${#temporals.format(os.dhInclusao, 'dd-MM-yyyy')}"></td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <button type="button" class="item" data-placement="top"
+                                                                    title="Enviar e-mail" data-toggle="modal" data-target="#MailModal">
+                                                                <i class="zmdi zmdi-mail-send"></i>
+                                                            </button>
+                                                            <a class="item" data-toggle="tooltip" data-placement="top"
+                                                               title="Incluir Apontamento" data-th-href="@{/TechMode/Painel/{id}/Ordem/Servico/Incluir/Apontamento(id=${os.id})}">
+                                                                <i class="zmdi zmdi-edit"></i>
+                                                            </a>
                                                         </div>
-                                                    </div>     
-
-                                                    <br> <br/>
-
-                                                    <div class="row form-group">
-                                                        <div class="col col-md-2">
-                                                            <label for="email-input" class=" form-control-label">RG*</label>
-                                                        </div>
-                                                        <div class="col-12 col-md-9">
-                                                            <input type="text" id="text-input" name="text-input" placeholder="Digite o RG" class="form-control" data-th-classappend="${#fields.hasErrors('rg')}? is-invalid" data-th-field="*{rg}">                                                        
-                                                            <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('rg')}" data-th-errors="*{rg}">
-                                                            </div>
-                                                        </div>
-
-                                                        <br> <br/>
-
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-2">
-                                                                <label for="email-input" class=" form-control-label">CPF*</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="text" id="email-input" name="email-input" placeholder="Digite o CPF" class="form-control" data-th-classappend="${#fields.hasErrors('cpf')}? is-invalid" data-th-field="*{cpf}">                                                        
-                                                                <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('cpf')}" data-th-errors="*{cpf}">
-                                                                </div>
-                                                            </div>
-
-                                                            <br> <br/>
-
-                                                            <div class="row form-group">
-                                                                <div class="col col-md-2">
-                                                                    <label for="email-input" class=" form-control-label">Contato*</label>
-                                                                </div>
-                                                                <div class="col-12 col-md-9">
-                                                                    <input type="tel" id="email-input" name="email-input" placeholder="Digite o Nº de telefone" class="form-control" data-th-classappend="${#fields.hasErrors('contato')}? is-invalid" data-th-field="*{contato}">                                                        
-                                                                    <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('contato')}" data-th-errors="*{contato}">
-                                                                    </div>
-                                                                </div>
-
-                                                                <br> <br/>
-
-                                                                <div class="row form-group">
-                                                                    <div class="col col-md-2">
-                                                                        <label for="email-input" class=" form-control-label">E-mail*</label>
-                                                                    </div>
-                                                                    <div class="col-12 col-md-9">
-                                                                        <input type="email" id="email-input" name="email-input" placeholder="Digite o e-mail corporativo" class="form-control" data-th-classappend="${#fields.hasErrors('email')}? is-invalid" data-th-field="*{email}">                                                        
-                                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <br> <br/>
-
-                                                                    <div class="row form-group">
-                                                                        <div class="col col-md-2">
-                                                                            <label for="email-input" class=" form-control-label">Equipe*</label>
-                                                                        </div>
-                                                                        <div class="col-12 col-md-9">
-                                                                            <input type="text" id="email-input" name="email-input" placeholder="Digite o nome da equipe" class="form-control" data-th-classappend="${#fields.hasErrors('equipe')}? is-invalid" data-th-field="*{equipe}">                                                        
-                                                                            <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('equipe')}" data-th-errors="*{equipe}">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <br> <br/>
-
-                                                                        <div class="card-footer">
-                                                                            <button data-th-if="${tecnico.id == null}" type="submit" class="btn btn-primary btn-sm">
-                                                                                <i class="fa fa-dot-circle-o"></i> Cadastrar
-                                                                            </button>
-                                                                            <button data-th-if="${tecnico.id != null}" type="submit" class="btn btn-primary btn-sm">
-                                                                                <i class="fa fa-dot-circle-o"></i> Alterar
-                                                                            </button>
-                                                                            <button type="reset" class="btn btn-danger btn-sm">
-                                                                                <i class="fa fa-ban"></i> Limpar
-                                                                            </button>
-                                                                        </div>
-                                                                        </form>
-
-                                                                    </div>
-
-                                                                </div>                                
-                                                            </div>
-
-
-
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="copyright">
-            <p>Copyright © 2018 Tech Mode.</p>
+                                                        
+                                                    </td>
+                                                </tr>
+                                                <tr class="spacer"></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END DATA TABLE -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="copyright">
+                                        <p>Copyright © 2018 Tech Mode.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END MAIN CONTENT-->
+                <!-- END PAGE CONTAINER-->
+            </div>
         </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-<!-- END MAIN CONTENT-->
-<!-- END PAGE CONTAINER-->
-</div>
 
-</div>
+        <!-- Jquery JS-->
+        <script data-th-src="@{/vendor/jquery-3.2.1.min.js}"></script>
+        <!-- Bootstrap JS-->
+        <script data-th-src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
+        <script data-th-src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
+        <!-- Vendor JS       -->
+        <script data-th-src="@{/vendor/slick/slick.min.js}">
+        </script>
+        <script data-th-src="@{/vendor/wow/wow.min.js}"></script>
+        <script data-th-src="@{/vendor/animsition/animsition.min.js}"></script>
+        <script data-th-src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
+        </script>
+        <script data-th-src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
+        <script data-th-src="@{/vendor/counter-up/jquery.counterup.min.js}">
+        </script>
+        <script data-th-src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
+        <script data-th-src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
+        <script data-th-src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
+        <script data-th-src="@{/vendor/select2/select2.min.js}">
+        </script>
 
-<!-- Jquery JS-->
-<script data-th-src="@{/vendor/jquery-3.2.1.min.js}"></script>
-<!-- Bootstrap JS-->
-<script data-th-src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
-<script data-th-src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
-<!-- Vendor JS       -->
-<script data-th-src="@{/vendor/slick/slick.min.js}">
-</script>
-<script data-th-src="@{/vendor/wow/wow.min.js}"></script>
-<script data-th-src="@{/vendor/animsition/animsition.min.js}"></script>
-<script data-th-src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
-</script>
-<script data-th-src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
-<script data-th-src="@{/vendor/counter-up/jquery.counterup.min.js}">
-</script>
-<script data-th-src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
-<script data-th-src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
-<script data-th-src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
-<script data-th-src="@{/vendor/select2/select2.min.js}">
-</script>
+        <!-- Main JS-->
+        <script data-th-src="@{/js/main.js}"></script>
 
-<!-- Main JS-->
-<script data-th-src="@{/js/main.js}"></script>
-
-</body>
+    </body>
 
 </html>
 <!-- end document-->

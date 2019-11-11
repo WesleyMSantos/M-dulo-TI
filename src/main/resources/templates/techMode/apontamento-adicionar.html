@@ -159,11 +159,11 @@
                                 </ul>
                             </li>
                             <li>
-                                 <a data-toggle="modal" data-target="#MailModal" href="#">
+                                <a data-toggle="modal" data-target="#MailModal" href="#">
                                     <i class="fas fa-desktop"></i>Equipamentos</a>
                             </li>
                             <li>
-                                 <a data-toggle="modal" data-target="#MailModal" href="#">
+                                <a data-toggle="modal" data-target="#MailModal" href="#">
                                     <i class="fas fa-desktop"></i>Pessoal</a>
                             </li>
                         </ul>
@@ -282,153 +282,132 @@
                     <div class="section__content section__content--p30">
                         <div class="container-fluid">
                             <div class="row">
-
-
-
                                 <div class="col-lg-12">
+
                                     <div class="card">
                                         <div class="card-header">
-                                            <strong data-th-if="${tecnico.id == null}" >Cadastrar Técnico</strong>
-                                            <strong data-th-if="${tecnico.id != null}" >Alterar Técnico</strong>
+                                            <h1 data-th-if="${apontamento.id == null}"><strong>Incluir novo Apontamento</strong></h1>
+                                            <h1 data-th-if="${apontamento.id != null}"><strong>Editar Apontamento</strong></h1>                                            
                                         </div>
-
                                         <div class="card-body card-block">
-                                            <form data-th-action="@{/TechMode/Painel/salvar}" method="POST" data-th-object="${tecnico}" enctype="multipart/form-data" class="form-horizontal">
+                                            <form data-th-action="@{/TechMode/Painel/Ordem/Servico/Apontamento/Salvar}" data-th-object="${apontamento}" method="POST" class="form-horizontal">
                                                 <input type="hidden" data-th-if="*{id != null}" data-th-field="*{id}" />
                                                 <div class="row form-group">
-                                                    <div class="col col-md-2">
-                                                        <label for="text-input" class=" form-control-label">Nome*</label>
+                                                    <div class="col col-md-3">
+                                                        <label for="titulo" class=" form-control-label">Título</label>
                                                     </div>
                                                     <div class="col-12 col-md-9">
-                                                        <input type="text" id="text-input" name="text-input" placeholder="Digite o nome completo" class="form-control" data-th-classappend="${#fields.hasErrors('nome')}? is-invalid" data-th-field="*{nome}">                                                        
-                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('nome')}" data-th-errors="*{nome}">
+                                                        <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título do apontamento" data-th-classappend="${#fields.hasErrors('titulo')}? is-invalid" data-th-field="*{titulo}">
+                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('titulo')}" data-th-errors="*{titulo}">
+
                                                         </div>
-                                                    </div>     
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="responsavel" class=" form-control-label">Tec. Responsável</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="text" id="responsavel" name="responsavel" placeholder="Responsável do apontamento" class="form-control" data-th-classappend="${#fields.hasErrors('responsavel')}? is-invalid" data-th-field="*{responsavel}">
+                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('responsavel')}" data-th-errors="*{responsavel}">
 
-                                                    <br> <br/>
-
-                                                    <div class="row form-group">
-                                                        <div class="col col-md-2">
-                                                            <label for="email-input" class=" form-control-label">RG*</label>
                                                         </div>
-                                                        <div class="col-12 col-md-9">
-                                                            <input type="text" id="text-input" name="text-input" placeholder="Digite o RG" class="form-control" data-th-classappend="${#fields.hasErrors('rg')}? is-invalid" data-th-field="*{rg}">                                                        
-                                                            <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('rg')}" data-th-errors="*{rg}">
-                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="nr-os" class=" form-control-label">NR. OS</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="number" id="nr-os" name="nr-os" placeholder="Nr. OS" class="form-control" readonly data-th-classappend="${#fields.hasErrors('os.id')}? is-invalid" data-th-field="*{os.id}">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="os-titulo" class=" form-control-label">Título da OS</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="text" id="os-titulo" name="os-titulo" placeholder="Título da OS" class="form-control" readonly data-th-classappend="${#fields.hasErrors('os.titulo')}? is-invalid" data-th-field="*{os.titulo}">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="qtHoras" class=" form-control-label">Qt. Horas</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="number" id="qtHoras" name="qtHoras" placeholder="Horas" class="form-control" data-th-classappend="${#fields.hasErrors('qtHoras')}? is-invalid" data-th-field="*{qtHoras}">
+                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('qtHoras')}" data-th-errors="*{qtHoras}">
+
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="descricao" class=" form-control-label">Descricão das Horas</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">              
+                                                        <textarea name="descricao" id="descricao" rows="9" placeholder="Descricão das Horas" class="form-control" data-th-classappend="${#fields.hasErrors('descricao')}? is-invalid" data-th-field="*{descricao}"></textarea>
+                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('descricao')}" data-th-errors="*{descricao}">
 
-                                                        <br> <br/>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-2">
-                                                                <label for="email-input" class=" form-control-label">CPF*</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="text" id="email-input" name="email-input" placeholder="Digite o CPF" class="form-control" data-th-classappend="${#fields.hasErrors('cpf')}? is-invalid" data-th-field="*{cpf}">                                                        
-                                                                <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('cpf')}" data-th-errors="*{cpf}">
-                                                                </div>
-                                                            </div>
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-dot-circle-o"></i> Salvar
+                                                    </button>
+                                                    <a data-th-href="@{/TechMode/Painel/Ordem/Servico/Consultar/Apontamentos}" class="btn btn-danger btn-sm">
+                                                        <i class="fa fa-ban"></i> Cancelar
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- END DATA TABLE -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="copyright">
+                                        <p>Copyright © 2018 Tech Mode.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END MAIN CONTENT-->
+                <!-- END PAGE CONTAINER-->
+            </div>
 
-                                                            <br> <br/>
-
-                                                            <div class="row form-group">
-                                                                <div class="col col-md-2">
-                                                                    <label for="email-input" class=" form-control-label">Contato*</label>
-                                                                </div>
-                                                                <div class="col-12 col-md-9">
-                                                                    <input type="tel" id="email-input" name="email-input" placeholder="Digite o Nº de telefone" class="form-control" data-th-classappend="${#fields.hasErrors('contato')}? is-invalid" data-th-field="*{contato}">                                                        
-                                                                    <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('contato')}" data-th-errors="*{contato}">
-                                                                    </div>
-                                                                </div>
-
-                                                                <br> <br/>
-
-                                                                <div class="row form-group">
-                                                                    <div class="col col-md-2">
-                                                                        <label for="email-input" class=" form-control-label">E-mail*</label>
-                                                                    </div>
-                                                                    <div class="col-12 col-md-9">
-                                                                        <input type="email" id="email-input" name="email-input" placeholder="Digite o e-mail corporativo" class="form-control" data-th-classappend="${#fields.hasErrors('email')}? is-invalid" data-th-field="*{email}">                                                        
-                                                                        <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <br> <br/>
-
-                                                                    <div class="row form-group">
-                                                                        <div class="col col-md-2">
-                                                                            <label for="email-input" class=" form-control-label">Equipe*</label>
-                                                                        </div>
-                                                                        <div class="col-12 col-md-9">
-                                                                            <input type="text" id="email-input" name="email-input" placeholder="Digite o nome da equipe" class="form-control" data-th-classappend="${#fields.hasErrors('equipe')}? is-invalid" data-th-field="*{equipe}">                                                        
-                                                                            <div class="alert alert-danger"  data-th-if="${#fields.hasErrors('equipe')}" data-th-errors="*{equipe}">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <br> <br/>
-
-                                                                        <div class="card-footer">
-                                                                            <button data-th-if="${tecnico.id == null}" type="submit" class="btn btn-primary btn-sm">
-                                                                                <i class="fa fa-dot-circle-o"></i> Cadastrar
-                                                                            </button>
-                                                                            <button data-th-if="${tecnico.id != null}" type="submit" class="btn btn-primary btn-sm">
-                                                                                <i class="fa fa-dot-circle-o"></i> Alterar
-                                                                            </button>
-                                                                            <button type="reset" class="btn btn-danger btn-sm">
-                                                                                <i class="fa fa-ban"></i> Limpar
-                                                                            </button>
-                                                                        </div>
-                                                                        </form>
-
-                                                                    </div>
-
-                                                                </div>                                
-                                                            </div>
-
-
-
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="copyright">
-            <p>Copyright © 2018 Tech Mode.</p>
         </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-<!-- END MAIN CONTENT-->
-<!-- END PAGE CONTAINER-->
-</div>
 
-</div>
+        <!-- Jquery JS-->
+        <script data-th-src="@{/vendor/jquery-3.2.1.min.js}"></script>
+        <!-- Bootstrap JS-->
+        <script data-th-src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
+        <script data-th-src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
+        <!-- Vendor JS       -->
+        <script data-th-src="@{/vendor/slick/slick.min.js}">
+        </script>
+        <script data-th-src="@{/vendor/wow/wow.min.js}"></script>
+        <script data-th-src="@{/vendor/animsition/animsition.min.js}"></script>
+        <script data-th-src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
+        </script>
+        <script data-th-src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
+        <script data-th-src="@{/vendor/counter-up/jquery.counterup.min.js}">
+        </script>
+        <script data-th-src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
+        <script data-th-src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
+        <script data-th-src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
+        <script data-th-src="@{/vendor/select2/select2.min.js}">
+        </script>
 
-<!-- Jquery JS-->
-<script data-th-src="@{/vendor/jquery-3.2.1.min.js}"></script>
-<!-- Bootstrap JS-->
-<script data-th-src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
-<script data-th-src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
-<!-- Vendor JS       -->
-<script data-th-src="@{/vendor/slick/slick.min.js}">
-</script>
-<script data-th-src="@{/vendor/wow/wow.min.js}"></script>
-<script data-th-src="@{/vendor/animsition/animsition.min.js}"></script>
-<script data-th-src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
-</script>
-<script data-th-src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
-<script data-th-src="@{/vendor/counter-up/jquery.counterup.min.js}">
-</script>
-<script data-th-src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
-<script data-th-src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
-<script data-th-src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
-<script data-th-src="@{/vendor/select2/select2.min.js}">
-</script>
+        <!-- Main JS-->
+        <script data-th-src="@{/js/main.js}"></script>
 
-<!-- Main JS-->
-<script data-th-src="@{/js/main.js}"></script>
-
-</body>
+    </body>
 
 </html>
 <!-- end document-->
